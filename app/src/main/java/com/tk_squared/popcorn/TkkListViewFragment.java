@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-public class PopcornListViewFragment extends Fragment implements RearrangeableListView.RearrangeListener{
+public class TkkListViewFragment extends Fragment implements RearrangeableListView.RearrangeListener{
 
     //region Description: variables and Interface declarations
     private RearrangeableListView listView;
@@ -29,7 +29,7 @@ public class PopcornListViewFragment extends Fragment implements RearrangeableLi
         void onStationSelected(tkkStation station);
     }
 
-    public PopcornListViewFragment() {
+    public TkkListViewFragment() {
     }
     //endregion
 
@@ -44,7 +44,7 @@ public class PopcornListViewFragment extends Fragment implements RearrangeableLi
     public boolean onRearrangeRequested(int fromIndex, int toIndex) {
         //If data is valid, move it
         if (toIndex > 0 && toIndex < listView.getCount()) {
-            ((PopcornActivity)getActivity()).getData().moveStation(fromIndex, toIndex);
+            ((TkkActivity)getActivity()).getData().moveStation(fromIndex, toIndex);
             ((ArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
             position = -1;
             return true;
@@ -81,17 +81,17 @@ public class PopcornListViewFragment extends Fragment implements RearrangeableLi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final PopcornActivity popcornActivity = (PopcornActivity)getActivity();
+        final TkkActivity tkkActivity = (TkkActivity)getActivity();
         listView = (RearrangeableListView) getView().findViewById(R.id.list);
         if (listView == null){
             listView = new RearrangeableListView(getActivity());
         }
 
-        ArrayAdapter adapter = new StationAdapter(popcornActivity, popcornActivity.getTkkData());
+        ArrayAdapter adapter = new StationAdapter(tkkActivity, tkkActivity.getTkkData());
         listView.setAdapter(adapter);
-        listView.setRearrangeEnabled(((PopcornActivity) getActivity()).getListEditEnabled());
+        listView.setRearrangeEnabled(((TkkActivity) getActivity()).getListEditEnabled());
         listView.setRearrangeListener(this);
-        callbacks = popcornActivity;
+        callbacks = tkkActivity;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,9 +102,9 @@ public class PopcornListViewFragment extends Fragment implements RearrangeableLi
                 callbacks.onStationSelected(station);
             }
         });
-        Toolbar toolbar = (Toolbar) popcornActivity.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) tkkActivity.findViewById(R.id.toolbar);
         toolbar.setSubtitle(R.string.subtitle);
-        popcornActivity.setSupportActionBar(toolbar);
+        tkkActivity.setSupportActionBar(toolbar);
     }
     //endregion
 
@@ -149,7 +149,7 @@ public class PopcornListViewFragment extends Fragment implements RearrangeableLi
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((PopcornActivity) getActivity()).getData().removeStationAt(position);
+                    ((TkkActivity) getActivity()).getData().removeStationAt(position);
                     notifyDataSetChanged();
                 }
             });

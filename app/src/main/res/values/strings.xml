@@ -13,5 +13,9 @@
     <string name="menu_edit_title">Edit List</string>
     <string name="menu_about_title">About Popcorn</string>
     <string name="skip_login">Skip</string>
-
+    <string name="web_page_title">Popcorn Main Page</string>
+    <string name="web_page_url">http://www.tk-squared.com/Popcorn</string>
+    <string name="deep_url">android-app://com.tk_squared.popcorn/http/www.tk-squared.com/Popcorn</string>
+    <string name="app_id_string">com.tk-squared.popcorn</string>
+    <string name="app_icon_url">http://www.tk-squared.com/popcorn_icon.png</string>
 </resources>

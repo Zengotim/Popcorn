@@ -224,7 +224,7 @@ public class tkkDataMod {
             instance = new tkkDataMod();
             instance.stations = new ArrayList<>();
             // uncomment to delete the database
-            //PopcornActivity.getPopcornContext().deleteDatabase("stations.db");
+            //TkkActivity.getTkkContext().deleteDatabase("stations.db");
 
 
             instance._activity = activity;

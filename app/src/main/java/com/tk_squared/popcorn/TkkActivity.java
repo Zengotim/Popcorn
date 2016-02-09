@@ -40,8 +40,8 @@ import com.facebook.FacebookSdk;
  * Created by zengo on 1/30/2016.
  * You know it Babe!
  */
-public class PopcornActivity extends AppCompatActivity
-        implements PopcornListViewFragment.Callbacks, tkkDataMod.Callbacks, LoginFragment.Callbacks {
+public class TkkActivity extends AppCompatActivity
+        implements TkkListViewFragment.Callbacks, tkkDataMod.Callbacks, LoginFragment.Callbacks {
 
     //region Description: Variables and Accessors
     private tkkDataMod tuxData;
@@ -75,12 +75,13 @@ public class PopcornActivity extends AppCompatActivity
         public CallbackManager getCallbackManager() {return callbackManager;}
 
     public boolean isLoggedIn(){
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        return accessToken != null;
+        //AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        //return accessToken != null; //TODO
+        return true;
     }
     //endregion
 
-    public PopcornActivity() {
+    public TkkActivity() {
     }
 
     //region Description: Lifecycle and Super Overrides
@@ -88,7 +89,7 @@ public class PopcornActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_popcorn);
+        setContentView(R.layout.activity_tkk);
 
         //show Splashscreen and progress indicator
         progBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -101,7 +102,7 @@ public class PopcornActivity extends AppCompatActivity
         setAdSpace();
 
         //Initialize Facebook
-        setupFacebook();
+        //setupFacebook(); //TODO
 
         //Get data model
         tuxData = tkkDataMod.getInstance(this);
@@ -115,12 +116,12 @@ public class PopcornActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-        if (fragment instanceof PopcornWebViewFragment &&
-                ((PopcornWebViewFragment) fragment).getWebview().canGoBack()) {
-            ((PopcornWebViewFragment) fragment).getWebview().goBack();
+        if (fragment instanceof TkkWebViewFragment &&
+                ((TkkWebViewFragment) fragment).getWebview().canGoBack()) {
+            ((TkkWebViewFragment) fragment).getWebview().goBack();
         } else if (fm.getBackStackEntryCount() > 1) {
-            if (fragment instanceof PopcornWebViewFragment){
-                ((PopcornWebViewFragment) fragment).getWebview().destroy();
+            if (fragment instanceof TkkWebViewFragment){
+                ((TkkWebViewFragment) fragment).getWebview().destroy();
             }
             fm.popBackStack();
         } else {
@@ -132,13 +133,13 @@ public class PopcornActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
         MenuInflater menuInflater = getMenuInflater();
-        if (fragment instanceof PopcornListViewFragment) {
-            menuInflater.inflate(R.menu.menu_popcorn, menu);
+        if (fragment instanceof TkkListViewFragment) {
+            menuInflater.inflate(R.menu.menu_tkk, menu);
             listEditEnabled = false;
-            ((PopcornListViewFragment) fragment)
+            ((TkkListViewFragment) fragment)
                     .getListView()
                     .setRearrangeEnabled(listEditEnabled);
-        } else if (fragment instanceof PopcornWebViewFragment) {
+        } else if (fragment instanceof TkkWebViewFragment) {
             menuInflater.inflate(R.menu.menu_webview, menu);
         }
         return true;
@@ -157,8 +158,8 @@ public class PopcornActivity extends AppCompatActivity
                 } else {
                     item.setChecked(false);
                 }
-                PopcornListViewFragment fragment =
-                        ((PopcornListViewFragment) fm.findFragmentById(R.id.fragment_container));
+                TkkListViewFragment fragment =
+                        ((TkkListViewFragment) fm.findFragmentById(R.id.fragment_container));
                 fragment.getListView()
                         .setRearrangeEnabled(listEditEnabled);
                 setDeleteButtons(fragment);
@@ -167,7 +168,7 @@ public class PopcornActivity extends AppCompatActivity
                 displayAbout();
                 return true;
             case R.id.action_facebook_share:
-                ((PopcornWebViewFragment)fm.findFragmentById(R.id.fragment_container)).onShareStation();
+                ((TkkWebViewFragment)fm.findFragmentById(R.id.fragment_container)).onShareStation();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -183,8 +184,8 @@ public class PopcornActivity extends AppCompatActivity
         client.connect();
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW,
-                "Popcorn Main Page",
-                Uri.parse("http://www.tk-squared.com/Popcorn"),
+                "@string/web_page_title",
+                Uri.parse("@string/web_page_url"),
                 Uri.parse("android-app://com.tk_squared.popcorn/http/www.tk-squared.com/Popcorn")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
@@ -198,8 +199,8 @@ public class PopcornActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW,
-                "Popcorn Main Page",
-                Uri.parse("http://www.tk-squared.com/Popcorn"),
+                "@string/web_page_title",
+                Uri.parse("@string/web_page_url"),
                 Uri.parse("android-app://com.tk_squared.popcorn/http/www.tk-squared.com/Popcorn")
         );
         AppIndex.AppIndexApi.end(client, viewAction);
@@ -252,8 +253,8 @@ public class PopcornActivity extends AppCompatActivity
 
     private void displayListView(){
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-        if (!(fragment instanceof PopcornListViewFragment)) {
-            fragment = new PopcornListViewFragment();
+        if (!(fragment instanceof TkkListViewFragment)) {
+            fragment = new TkkListViewFragment();
             fm.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack("ListView")
@@ -263,8 +264,8 @@ public class PopcornActivity extends AppCompatActivity
 
     private void displayWebView(tkkStation station){
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-        if (!(fragment instanceof PopcornWebViewFragment)) {
-            fragment = new PopcornWebViewFragment();
+        if (!(fragment instanceof TkkWebViewFragment)) {
+            fragment = new TkkWebViewFragment();
             Bundle args = new Bundle();
             args.putString("uri", station.getUri().toString());
             args.putString("name", station.getName());
@@ -308,10 +309,10 @@ public class PopcornActivity extends AppCompatActivity
     //region Description: private methods for utility
     //Method for setting visibility for delete buttons
     //Seeing as how I can't seem to make them work in the edit mode
-    private void setDeleteButtons(PopcornListViewFragment fragment){
+    private void setDeleteButtons(TkkListViewFragment fragment){
 
         ListView listView = fragment.getListView();
-        ((PopcornListViewFragment.StationAdapter)(listView.getAdapter())).setShowDelete(!listEditEnabled);
+        ((TkkListViewFragment.StationAdapter)(listView.getAdapter())).setShowDelete(!listEditEnabled);
 
         for( int i = 0; i < listView.getCount(); i++) {
             View row = listView.getChildAt(i);
@@ -325,12 +326,12 @@ public class PopcornActivity extends AppCompatActivity
         }
     }
 
-    private void setupFacebook(){
+    /*private void setupFacebook(){
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.tk_squared.popcorn",
+                    "@string/app_id_string",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
@@ -354,7 +355,7 @@ public class PopcornActivity extends AppCompatActivity
         } catch (Exception e) {
             Log.e("exception", e.toString());
         }
-    }
+    }*/ //TODO
     //endregion
 
     //region Description: Ad Support settings

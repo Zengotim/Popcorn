@@ -27,7 +27,7 @@ import com.facebook.share.widget.ShareDialog;
  */
 
 @SuppressLint("SetJavaScriptEnabled")
-public class PopcornWebViewFragment extends Fragment{
+public class TkkWebViewFragment extends Fragment{
 
     //region Description: Variables and Constructor
     private WebView webview; public WebView getWebview(){ return webview;}
@@ -36,7 +36,7 @@ public class PopcornWebViewFragment extends Fragment{
     private String currentUrl;
     private String currentName;
 
-    public PopcornWebViewFragment(){}
+    public TkkWebViewFragment(){}
 
     //endregion
 
@@ -75,7 +75,7 @@ public class PopcornWebViewFragment extends Fragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        ((PopcornActivity)getActivity()).getCallbackManager().onActivityResult(requestCode, resultCode, data);
+        ((TkkActivity)getActivity()).getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
     //endregion
 
@@ -107,19 +107,19 @@ public class PopcornWebViewFragment extends Fragment{
     }
 
     public void prepShareDialog(){
-        final PopcornActivity popcornActivity = (PopcornActivity)getActivity();
+        final TkkActivity tkkActivity = (TkkActivity)getActivity();
         try {
             if (ShareDialog.canShow(ShareLinkContent.class)){
                 //create the post
-                String description = "Listen to " + currentName + " on Popcorn!";
+                String description = "Listen to " + currentName + " on " + "@string/app_name" + "!";
                 linkContent = new ShareLinkContent.Builder()
                         .setContentTitle(currentName)
                         .setContentDescription(description)
-                        .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.tk_squared.popcorn"))
-                        .setImageUrl(Uri.parse("http://www.tk-squared.com/popcorn_icon.png"))
+                        .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=" + "@string/app_id_string"))
+                        .setImageUrl(Uri.parse("@string/app_icon_url"))
                         .build();
                 //Sharing callbacks
-                shareDialog.registerCallback(popcornActivity.getCallbackManager(), new FacebookCallback<Sharer.Result>() {
+                shareDialog.registerCallback(tkkActivity.getCallbackManager(), new FacebookCallback<Sharer.Result>() {
                     @Override
                     public void onSuccess(Sharer.Result shareResult) {
                         Log.i("Share Success", "Shared to facebook");

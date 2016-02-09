@@ -1,16 +1,14 @@
 package com.tk_squared.popcorn;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,7 +16,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.CallbackManager;
 
 
 public class LoginFragment extends Fragment {
@@ -43,7 +40,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final PopcornActivity popcornActivity = (PopcornActivity)getActivity();
+        final TkkActivity tkkActivity = (TkkActivity)getActivity();
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         skipButton = (Button) view.findViewById(R.id.skip_button);
         if(skipButton == null) skipButton = new Button(getActivity());
@@ -54,7 +51,7 @@ public class LoginFragment extends Fragment {
         loginButton = (LoginButton)view.findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.setFragment(this);
-        callbacks = popcornActivity;
+        callbacks = tkkActivity;
 
         skipButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -62,7 +59,7 @@ public class LoginFragment extends Fragment {
                 callbacks.onLoginFinish();
             }
         });
-        loginButton.registerCallback(popcornActivity.getCallbackManager(), new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback(tkkActivity.getCallbackManager(), new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.i("LOGIN", "Facebook logged in");
@@ -93,6 +90,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        ((PopcornActivity)getActivity()).getCallbackManager().onActivityResult(requestCode, resultCode, data);
+        ((TkkActivity)getActivity()).getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 }
