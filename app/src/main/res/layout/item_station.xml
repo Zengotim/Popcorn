@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/colorTextLight"
+            android:textColor="@color/colorTextDark"
             android:textSize="@dimen/list_name_size"
             android:text="@string/station_title" />
         <TextView
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/colorTextLight"
+            android:textColor="@color/colorTextDark"
             android:textSize="@dimen/list_URL_size"
             android:text="@string/station_subtitle"/>
 

@@ -331,7 +331,7 @@ public class TkkActivity extends AppCompatActivity
         callbackManager = CallbackManager.Factory.create();
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
-                    "@string/app_id_string",
+                    "com.tk_squared.popcorn",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
