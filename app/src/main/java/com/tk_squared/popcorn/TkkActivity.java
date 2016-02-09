@@ -75,9 +75,9 @@ public class TkkActivity extends AppCompatActivity
         public CallbackManager getCallbackManager() {return callbackManager;}
 
     public boolean isLoggedIn(){
-        //AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        //return accessToken != null; //TODO
-        return true;
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null; //TODO
+        //return true;
     }
     //endregion
 
@@ -102,7 +102,7 @@ public class TkkActivity extends AppCompatActivity
         setAdSpace();
 
         //Initialize Facebook
-        //setupFacebook(); //TODO
+        setupFacebook(); //TODO
 
         //Get data model
         tuxData = tkkDataMod.getInstance(this);
@@ -326,7 +326,7 @@ public class TkkActivity extends AppCompatActivity
         }
     }
 
-    /*private void setupFacebook(){
+    private void setupFacebook(){
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         try {
@@ -355,7 +355,7 @@ public class TkkActivity extends AppCompatActivity
         } catch (Exception e) {
             Log.e("exception", e.toString());
         }
-    }*/ //TODO
+    } //TODO
     //endregion
 
     //region Description: Ad Support settings

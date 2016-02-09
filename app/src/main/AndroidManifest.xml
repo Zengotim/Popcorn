@@ -21,10 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true">
-        <!--meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/-->
-        <!--provider android:authorities="com.facebook.app.FacebookContentProvider1511621782474272"
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <provider android:authorities="com.facebook.app.FacebookContentProvider672647712877584"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/-->
+            android:exported="true"/>
         <activity
             android:name=".TkkActivity"
             android:configChanges="orientation|screenSize"
