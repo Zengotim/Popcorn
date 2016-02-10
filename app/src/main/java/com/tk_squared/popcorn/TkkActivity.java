@@ -76,8 +76,7 @@ public class TkkActivity extends AppCompatActivity
 
     public boolean isLoggedIn(){
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        return accessToken != null; //TODO
-        //return true;
+        return accessToken != null;
     }
     //endregion
 
@@ -102,7 +101,7 @@ public class TkkActivity extends AppCompatActivity
         setAdSpace();
 
         //Initialize Facebook
-        setupFacebook(); //TODO
+        setupFacebook();
 
         //Get data model
         tuxData = tkkDataMod.getInstance(this);
@@ -355,7 +354,7 @@ public class TkkActivity extends AppCompatActivity
         } catch (Exception e) {
             Log.e("exception", e.toString());
         }
-    } //TODO
+    }
     //endregion
 
     //region Description: Ad Support settings

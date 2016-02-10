@@ -103,7 +103,7 @@ public class TkkWebViewFragment extends Fragment{
     }
 
     public void onShareStation(){
-        ShareDialog.show(this, linkContent);
+        shareDialog.show(linkContent);
     }
 
     public void prepShareDialog(){
@@ -111,12 +111,13 @@ public class TkkWebViewFragment extends Fragment{
         try {
             if (ShareDialog.canShow(ShareLinkContent.class)){
                 //create the post
-                String description = "Listen to " + currentName + " on " + "@string/app_name" + "!";
+
+                String description = "Listen to " + currentName + " on " + getString(R.string.app_name) + "!";
                 linkContent = new ShareLinkContent.Builder()
                         .setContentTitle(currentName)
                         .setContentDescription(description)
-                        .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=" + "@string/app_id_string"))
-                        .setImageUrl(Uri.parse("@string/app_icon_url"))
+                        .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=" + getString(R.string.app_id_string)))
+                        .setImageUrl(Uri.parse(getString(R.string.app_icon_url)))
                         .build();
                 //Sharing callbacks
                 shareDialog.registerCallback(tkkActivity.getCallbackManager(), new FacebookCallback<Sharer.Result>() {
