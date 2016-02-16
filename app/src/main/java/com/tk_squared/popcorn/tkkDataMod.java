@@ -203,7 +203,9 @@ public class tkkDataMod {
         }
 
         protected void onPostExecute(Integer result){
-
+            if(this.bitmap == null) {
+                this.bitmap = BitmapFactory.decodeResource(_activity.getApplicationContext().getResources(), R.drawable.ic_launcher);
+            }
             instance.stations.add(dataSource.createStation(this.name, this.uri, this.bitmap, _activity));
 
             if(++completes >= tasks) {
