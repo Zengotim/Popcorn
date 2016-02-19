@@ -18,7 +18,7 @@
     <string name="deep_url">android-app://com.tk_squared.popcorn/http/www.tk-squared.com/Popcorn</string>
     <string name="app_id_string">com.tk_squared.popcorn</string>
     <string name="app_icon_url">http://www.tk-squared.com/Popcorn/popcorn_icon.png</string>
-    <string name="stations_list_url">http://tk-squared.com/Bong/stations.json</string>
-    <string name="server_list_version">bong_server_version.txt</string>
+    <string name="stations_list_url">http://tk-squared.com/Popcorn/stations.json</string>
+    <string name="server_list_version">popcorn_server_version.txt</string>
     <string name="facebook_app_id">672647712877584</string>
 </resources>
