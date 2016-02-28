@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 
-import com.millennialmedia.internal.utils.IOUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -68,7 +69,7 @@ public class tkkDataMod {
                 URL url = new URL(_activity.getString(R.string.stations_list_url));
                 URLConnection con = url.openConnection();
                 InputStream in = con.getInputStream();
-                this.body = IOUtils.convertStreamToString(in);
+                this.body = fileReader(in);
                 String[] lines = this.body.split("~#%#~");
                 String serverListVersion = lines[0];
                 File vFile = new File(_activity.getApplicationContext().getFilesDir(),_activity.getString(R.string.server_list_version));
@@ -147,6 +148,17 @@ public class tkkDataMod {
 
         }
 
+        private String fileReader(InputStream inputStream) throws IOException {
+
+            BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+        }
+
         private void updateListVersion(File vFile, String sVersion) {
             FileOutputStream writer;
             try {
@@ -160,6 +172,8 @@ public class tkkDataMod {
             }
         }
     }
+
+
 
     private class CreateStationTask extends AsyncTask<Void, Integer, Integer>{
 
