@@ -81,12 +81,12 @@ public class tkkDataMod {
                         updateListVersion(vFile, serverListVersion);
                         update = true;
                     } else {
-                        try {
-                            reader = new BufferedReader(new FileReader(vFile));
-                            String date;
-
-                            while ((date = reader.readLine()) != null) {
-                                if (!date.equals(serverListVersion)) {
+                        try {                                                    //TODO
+                            reader = new BufferedReader(new FileReader(vFile));  // Okay, maybe you have a reason for doing this
+                            String date;                                         // but I am wondering why you aren't just checking
+                                                                                 // if (con.getLastModified() > vFile.lastModified()){
+                            while ((date = reader.readLine()) != null) {        //  then grab the file and replace the local copy and
+                                if (!date.equals(serverListVersion)) {          //  do other stuff. }
                                     update = true;
                                     updateListVersion(vFile, serverListVersion);
                                     break;
@@ -123,13 +123,13 @@ public class tkkDataMod {
         }
 
         protected void onPostExecute(Integer result) {
-            if(update){
-                instance.deleteAllStations();
-                for(int i = 0; i < jsons.size(); ++i) {
-                    JSONObject json = jsons.get(i);
-                    String name;
-                    String url;
-                    String iconUrl;
+            if(update){                                    //TODO
+                instance.deleteAllStations();              // I seriously don't like this part
+                for(int i = 0; i < jsons.size(); ++i) {   // I think it would be more efficient to
+                    JSONObject json = jsons.get(i);       // take each Uri and check the db to see
+                    String name;                          //if the station already exists or not before
+                    String url;                           // deleting it, at least keep the downloaded icon
+                    String iconUrl;                       // so that the icon won't have to be downloaded again
                     try {
                         name = json.getString("name");
                         url = json.getString("url");
@@ -194,11 +194,11 @@ public class tkkDataMod {
             try {
                 //  String
                 if(bitmap == null) {
-                    if(iconURL == null)  iconURL = "http://www.google.com/favicon.ico";
-                    bitmap = BitmapFactory.decodeStream((InputStream) new URL(iconURL).getContent());
-                }
-
-            }
+                    if(iconURL == null)  iconURL = "http://www.google.com/favicon.ico";               //TODO
+                    bitmap = BitmapFactory.decodeStream((InputStream) new URL(iconURL).getContent()); // We could make the JSON easier to maintain by
+                }                                                                                     // changing the icon URL to be
+                                                                                                      // URL(uri.getHost() + "/favicon.ico")
+            }                                                                                         // then we don't have to store the icon url
             catch(MalformedURLException e){
                 Log.i("MalformedURLException", e.toString());
                 this.bitmap = BitmapFactory.decodeResource(_activity.getApplicationContext().getResources(), R.drawable.ic_launcher);
